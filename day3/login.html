@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form with JavaScript Validation</title>
+  <style>
+    .error-message {
+      color: red;
+    }
+    
+      body {
+        font-family: Arial, sans-serif;
+        background-image:linear-gradient(to right,white,goldenrod);
+      }
+
+      .container {
+        background-color: gray;
+        border-radius: 10px;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        margin-top: 100px;
+
+      }
+
+      .form-title {
+        background-image: linear-gradient(to right, black, white);
+
+        color:black;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+        width: 94%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      .remember {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .forgot {
+        text-align: right;
+        margin-bottom: 15px;
+      }
+
+      .login-btn {
+        background-image: linear-gradient(orange,yellow);
+
+       
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 10%;
+        margin-bottom: 10px;
+      }
+
+      .signup-link {
+        text-align: center;
+      }
+    </style>
+  
+</head>
+<body>
+    <div class="container">
+        <div class="form-title">
+            <h2>Login Form</h2>
+            </div>
+        
+<form id="loginForm">
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email">
+  <div class="error-message" id="emailError"></div>
+  
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password">
+  <div class="error-message" id="passwordError"></div>
+
+  <div class="remember">
+    <input type="checkbox" id="remember" name="remember" />
+    <label for="remember">Remember me</label>
+  </div>
+<div class="login-btn">
+  <button type="submit" id="loginform">Login</button>
+  </div>
+
+  <div class="forgot">
+    <a href="#">Forgot Password?</a>
+  </div>
+  </div>
+</form>
+
+<script>
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const emailError = document.getElementById('emailError');
+const passwordError = document.getElementById('passwordError');
+
+// Validation functions
+function validateEmail() {
+  const emailValue = emailInput.value;
+  if (emailValue === '') {
+    emailError.textContent = 'Email cannot be empty';
+    return false;
+  } else if (!emailValue.match(/^\S+@\S+\.\S+$/)) {
+    emailError.textContent = 'Invalid email format';
+    return false;
+  } else {
+    emailError.textContent = '';
+    return true;
+  }
+}
+
+function validatePassword() {
+  if (passwordInput.value === '') {
+    passwordError.textContent = 'Password cannot be empty';
+    return false;
+  } else {
+    passwordError.textContent = '';
+    return true;
+  }
+}
+
+// Event listeners
+emailInput.addEventListener('focusout', validateEmail);
+passwordInput.addEventListener('focusout', validatePassword);
+
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+  if (!validateEmail() || !validatePassword()) {
+    event.preventDefault(); // Prevent form submission if validation fails
+  }
+});
+</script>
+
+</body>
+</html>

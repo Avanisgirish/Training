@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign Up</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: grey;
+        color:white
+      }
+
+      .container {
+        background-image: linear-gradient(to right,black,grey);
+        border-radius: 10px;
+        box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        margin-top: 100px;
+      }
+
+      .form-title {
+        background-image: linear-gradient(to right, black, grey);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"],
+      input[type="tel"],
+      input[type="date"],
+      input[type="email"],
+      input[type="password"],
+      textarea {
+        width: 94%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      select {
+        width: 99%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .signup-btn {
+        background-image: linear-gradient(to right, #ff5733, #ff8c1a);
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .error-msg{
+        color:red;
+      }
+      
+    </style>
+  </head>
+
+  <body>
+    
+    <div class="container">
+      <div class="form-title">
+        <h2>Sign Up</h2>
+      </div>
+      <form action="home.html" onsubmit="return validateForm()" id="signupform">
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          placeholder="First Name"
+          required
+        /><br />
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          placeholder="Last Name"
+          required
+        /><br />
+        <input
+          type="date"
+          id="dob"
+          name="dob"
+          placeholder="Date of Birth"
+          required
+        /><br />
+        Gender:<input type="radio" name="gender",value="male">male
+        <input type="radio" name="gender",value="female">female
+        <input type="radio" name="gender",value="others">others
+         <br />
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="Phone Number"
+          required
+        /><br />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email Address"
+          required
+        /><br />
+        <textarea
+          id="address"
+          name="address"
+          placeholder="Your Address here"
+          rows="3"
+          required>
+      </textarea>
+        <br />
+
+        <select id="state" name="State" required>
+          <option value="" disabled selected>Select State</option>
+          
+          <option value="KL">Kerala</option>
+          
+          <option value="TN">Tamil Nadu</option>
+          <option value="TS">Telangana</option></select
+        ><br />
+
+        <select id="city" name="city" disabled>
+          <option value="none" selected disabled>
+            Select a State First
+          </option></select
+        ><br />
+
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Username"
+          required
+        /><br />
+        
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        /><br />
+        <div class="error-msg" id="passwordError"></div>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirm-password"
+          placeholder="Confirm Password"
+          required
+        /><br />
+        <div class="error-msg" id="confirmPasswordError"></div>
+
+        <script>
+          const stateDropdown = document.getElementById("state");
+          const cityDropdown = document.getElementById("city");
+
+          const citiesByState = {
+            
+            KL: ["Kochi", "Thiruvananthapuram", "Kozhikode"],
+            
+            TN: ["Chennai", "Coimbatore", "Madurai"],
+            TS: ["Hyderabad", "Warangal", "Karimnagar"],
+          };
+
+          stateDropdown.addEventListener("change", function () {
+            const selectedState = stateDropdown.value;
+            const cities = citiesByState[selectedState];
+
+            cityDropdown.innerHTML =
+              '<option value="none" selected disabled>Select a City</option>';
+            cityDropdown.disabled = false;
+
+            if (cities) {
+              cities.forEach((city) => {
+                const option = document.createElement("option");
+                option.value = city.toLowerCase().replace(" ", "-");
+                option.textContent = city;
+                cityDropdown.appendChild(option);
+              });
+            } else {
+              cityDropdown.innerHTML =
+                '<option value="none" selected disabled>No Cities Available</option>';
+              cityDropdown.disabled = true;
+            }
+          });
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+ const confirmPasswordInput = document.getElementById('confirmPassword');
+const passwordError = document.getElementById('passwordError');
+const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+  
+function validatePassword() {
+  const passwordValue = passwordInput.value;
+  if (passwordValue === '') {
+    passwordError.textContent = 'Password cannot be empty';
+    return false;
+  } else if (passwordValue.length < 6) {
+    passwordError.textContent = 'Password should be at least 6 characters';
+    return false;
+  } else {
+    passwordError.textContent = '';
+    return true;
+  }
+}
+
+function validatePasswordConfirmation() {
+  const confirmPasswordValue = confirmPasswordInput.value;
+  if (confirmPasswordValue === '') {
+    confirmPasswordError.textContent = 'Please confirm your password';
+    return false;
+  } else if (confirmPasswordValue !== passwordInput.value) {
+    confirmPasswordError.textContent = 'Passwords do not match';
+    return false;
+  } else {
+    confirmPasswordError.textContent = '';
+    return true;
+  }
+}
+
+passwordInput.addEventListener('input', validatePassword);
+confirmPasswordInput.addEventListener('input', validatePasswordConfirmation);
+
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+  if (!validatePassword() || !validatePasswordConfirmation()) {
+    event.preventDefault();
+  }
+});
+        </script>
+        <input type="submit" class="signup-btn" value="Sign Up" />
+      </form>
+    </div>
+  </body>
+</html>
